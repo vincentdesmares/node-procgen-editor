@@ -10,7 +10,6 @@ const {Grid, Row, Col} = require('react-flexbox-grid');
 
 export const EditView = () => (
   <div>
-    <h4>Welcome!</h4>
     <Grid>
       <Row>
         <Col md={2}/>
