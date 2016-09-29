@@ -15,7 +15,7 @@ import HomeView from '../components/HomeView'
 const mapDispatchToProps = (dispatch) => {
   return {
     editAction: () => {
-      dispatch(push('/edit'))
+      dispatch(push('/project/2'))
     }
   }
 }

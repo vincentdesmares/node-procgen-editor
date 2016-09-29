@@ -107,6 +107,7 @@
     "koa-proxy": "^0.6.0",
     "koa-static": "^3.0.0",
     "material-design-icons": "^3.0.0",
+    "material-design-lite": "^1.2.1",
     "material-ui": "^0.15.4",
     "node-sass": "^3.7.0",
     "normalize.css": "^4.1.1",
