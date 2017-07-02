@@ -10,7 +10,8 @@ It allows you to setup a pipeline to procedurally generate scenes that will be a
 
 More here :
 
-[Project Evolution](/screenshots)
+[Project Screenshots](/data/screenshots)
+[Project 3D Assets](/data/3dassets)
 
 ## Table of Contents
 
