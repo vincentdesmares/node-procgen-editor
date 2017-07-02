@@ -1,6 +1,46 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import {
+  ApolloClient,
+  gql,
+  graphql,
+  ApolloProvider,
+  createNetworkInterface
+} from "react-apollo";
+
+const jobsListQuery = gql`
+  query jobsListQuery {
+    authors {
+      id
+      firstName
+    }
+  }
+`;
+
+const JobsList = ({ data: { loading, error, authors } }) => {
+  if (loading) {
+    return <p>Loading ...</p>;
+  }
+  if (error) {
+    return (
+      <p>
+        {error.message}
+      </p>
+    );
+  }
+  return (
+    <ul>
+      {authors.map(job =>
+        <li key={job.id}>
+          {job.firstName}
+        </li>
+      )}
+    </ul>
+  );
+};
+
+const JobsListWithData = graphql(jobsListQuery)(JobsList);
 
 class App extends Component {
   render() {
@@ -8,11 +48,9 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React 234</h2>
+          <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <JobsListWithData />
       </div>
     );
   }
