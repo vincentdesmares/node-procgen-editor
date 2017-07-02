@@ -6,7 +6,7 @@ What does it do?
 
 It allows you to setup a pipeline to procedurally generate scenes that will be available trough an API.
 
-![Scene generation main page](/screenshots/2.png)
+![Scene generation main page](/data/screenshots/2.png)
 
 More here :
 
