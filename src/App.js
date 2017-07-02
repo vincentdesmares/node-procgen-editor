@@ -11,14 +11,17 @@ import {
 
 const jobsListQuery = gql`
   query jobsListQuery {
-    authors {
+    jobs {
       id
-      firstName
+      type
+      name
+      input
+      output
     }
   }
 `;
 
-const JobsList = ({ data: { loading, error, authors } }) => {
+const JobsList = ({ data: { loading, error, jobs } }) => {
   if (loading) {
     return <p>Loading ...</p>;
   }
@@ -31,9 +34,9 @@ const JobsList = ({ data: { loading, error, authors } }) => {
   }
   return (
     <ul>
-      {authors.map(job =>
+      {jobs.map(job =>
         <li key={job.id}>
-          {job.firstName}
+          {job.type}, {job.name}, {job.input}, {job.output}
         </li>
       )}
     </ul>
@@ -61,7 +64,10 @@ const AddJobButtonWithData = graphql(gql`
   mutation addJob($type: String!) {
     addJob(type: $type) {
       id
-      firstName
+      type
+      name
+      input
+      output
     }
   }
 `)(AddJobButton);
