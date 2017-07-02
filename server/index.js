@@ -1,5 +1,5 @@
 const express = require("express");
-const { graphqlExpress } = require("graphql-server-express");
+const { graphqlExpress, graphiqlExpress } = require("graphql-server-express");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -8,7 +8,7 @@ app.set("port", process.env.PORT || 8080);
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("build"));
 }
 
 app.get("/generate", (req, res) => {
@@ -24,6 +24,13 @@ app.use(
   "/graphql",
   bodyParser.json(),
   graphqlExpress({ schema: myGraphQLSchema })
+);
+
+app.use(
+  "/graphiql",
+  graphiqlExpress({
+    endpointURL: "/graphql"
+  })
 );
 
 app.listen(app.get("port"), () => {

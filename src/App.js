@@ -40,6 +40,32 @@ const JobsList = ({ data: { loading, error, authors } }) => {
   );
 };
 
+// A mutation is made available on a callback called `mutate`
+// Other props of the wrapping component are passed through.
+function AddJobButton({ mutate, type }) {
+  return (
+    <button
+      onClick={() =>
+        mutate({
+          variables: { type },
+          refetchQueries: [{ query: jobsListQuery }]
+        })}
+    >
+      Upvote
+    </button>
+  );
+}
+
+// You can also use `graphql` for GraphQL mutations
+const AddJobButtonWithData = graphql(gql`
+  mutation addJob($type: String!) {
+    addJob(type: $type) {
+      id
+      firstName
+    }
+  }
+`)(AddJobButton);
+
 const JobsListWithData = graphql(jobsListQuery)(JobsList);
 
 class App extends Component {
@@ -51,6 +77,7 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <JobsListWithData />
+        <AddJobButtonWithData type={"ṕlop"} />
       </div>
     );
   }

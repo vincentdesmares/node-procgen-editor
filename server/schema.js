@@ -23,9 +23,9 @@ const typeDefs = `
   }
   # this schema allows the following mutation:
   type Mutation {
-    upvotePost (
-      postId: Int!
-    ): Post
+    addJob (
+      type: String!
+    ): Author
   }
 `;
 
@@ -48,12 +48,9 @@ const resolvers = {
     author: (_, { id }) => find(authors, { id: id })
   },
   Mutation: {
-    upvotePost: (_, { postId }) => {
-      const post = find(posts, { id: postId });
-      if (!post) {
-        throw new Error(`Couldn't find post with id ${postId}`);
-      }
-      post.votes += 1;
+    addJob: (_, { type }) => {
+      const post = { id: authors.length + 1, firstName: type, lastName: type };
+      authors.push(post);
       return post;
     }
   },
