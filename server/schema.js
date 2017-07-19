@@ -2,6 +2,8 @@ const { makeExecutableSchema } = require("graphql-tools");
 
 const { find, filter } = require("lodash");
 
+const { Job } = require("./models");
+
 const typeDefs = `
   type Job {
     id: Int!
@@ -9,6 +11,7 @@ const typeDefs = `
     name: String
     input: String
     output: String
+    status: String
     # posts: [Post]
   }
   # the schema allows the following query:
@@ -21,6 +24,9 @@ const typeDefs = `
     addJob (
       type: String!
     ): Job
+    getNextJob (
+      type: String!
+    ): Job
   }
 `;
 
@@ -28,20 +34,34 @@ const typeDefs = `
 const jobs = [{ id: 1, type: "Tom", name: "Coleman", input: "", output: "" }];
 const resolvers = {
   Query: {
-    jobs: () => jobs,
-    job: (_, { id }) => find(jobs, { id: id })
+    jobs: () => {
+      return Job.findAll()
+        .then(jobs => {
+          return jobs;
+        })
+        .catch(function() {
+          return [];
+        });
+    },
+    job: (_, { id }) => Job.findById(id)
   },
   Mutation: {
     addJob: (_, { type }) => {
-      const job = {
-        id: jobs.length + 1,
-        type,
-        name: "naaame",
-        input: "",
-        output: ""
-      };
-      jobs.push(job);
-      return job;
+      return Job.create({
+        type: type,
+        name: "test 1",
+        input: "test",
+        output: "test2",
+        status: "pending"
+      });
+    },
+    getNextJob: (_, { type }) => {
+      return Job.findOne({
+        where: {
+          type: type
+        },
+        order: ["id", "desc"]
+      });
     }
   }
 };
