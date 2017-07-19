@@ -1,8 +1,9 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscodet",
-    "donjayamanne.python",
-    "RobinMalfait.prettier-eslint-vscode",
-    "kumar-harsh.graphql-for-vscode"
+    "esbenp.prettier-vscodet", // prettify the code
+    "donjayamanne.python", // Lint python
+    "RobinMalfait.prettier-eslint-vscode", // Allow to pretify the code based on eslint rules
+    "kumar-harsh.graphql-for-vscode", // Handle linting of graphql
+    "dbaeumer.vscode-eslint" // Handle advanced feedback, like variable not used
   ]
 }

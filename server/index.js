@@ -1,8 +1,10 @@
 const express = require("express");
 const { graphqlExpress, graphiqlExpress } = require("graphql-server-express");
 const bodyParser = require("body-parser");
-
+const { createServer } = require("http");
 const app = express();
+const { SubscriptionServer } = require("subscriptions-transport-ws");
+const { execute, subscribe } = require("graphql");
 
 app.set("port", process.env.PORT || 8080);
 
@@ -32,6 +34,24 @@ app.use(
     endpointURL: "/graphql"
   })
 );
+
+const ws = createServer(app);
+const PORT = 5000;
+ws.listen(PORT, () => {
+  console.log(`GraphQL Server is now running on http://localhost:${PORT}`);
+  // Set up the WebSocket for handling GraphQL subscriptions
+  new SubscriptionServer(
+    {
+      execute,
+      subscribe,
+      schema: myGraphQLSchema
+    },
+    {
+      server: ws,
+      path: "/subscriptions"
+    }
+  );
+});
 
 app.listen(app.get("port"), () => {
   console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console

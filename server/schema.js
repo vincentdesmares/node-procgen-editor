@@ -4,6 +4,9 @@ const { find, filter } = require("lodash");
 
 const { Job } = require("./models");
 
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
+
 const typeDefs = `
   type Job {
     id: Int!
@@ -27,6 +30,9 @@ const typeDefs = `
     getNextJob (
       type: String!
     ): Job
+  }
+  type Subscription {
+    jobUpdated(type: String!): Job
   }
 `;
 
@@ -86,8 +92,14 @@ const resolvers = {
       }).then(job => {
         job.status = "processing";
         job.save();
+        pubsub.publish("jobUpdated", { jobUpdated: job });
         return job;
       });
+    }
+  },
+  Subscription: {
+    jobUpdated: {
+      subscribe: () => pubsub.asyncIterator("jobUpdated")
     }
   }
 };

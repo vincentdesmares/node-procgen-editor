@@ -6,5 +6,11 @@
     "jasmine": true,
     "es6": true
   },
-  "plugins": ["react"]
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    // disable rules from base configurations
+    "no-console": "off"
+  }
 }
