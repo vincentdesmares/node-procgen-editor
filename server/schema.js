@@ -30,8 +30,24 @@ const typeDefs = `
   }
 `;
 
-// example data
-const jobs = [{ id: 1, type: "Tom", name: "Coleman", input: "", output: "" }];
+// Load initial jobs
+let jobs = [];
+Job.findAll({
+  where: {
+    status: "pending"
+  }
+})
+  .then(pendingJobs => {
+    console.log(
+      "Jobs still pending are loaded at server start",
+      pendingJobs.map(job => job.id)
+    );
+    jobs = pendingJobs.map(job => job.id);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
 const resolvers = {
   Query: {
     jobs: () => {
@@ -53,14 +69,24 @@ const resolvers = {
         input: "test",
         output: "test2",
         status: "pending"
+      }).then(function(job) {
+        jobs.push(job.id);
+        return job;
       });
     },
     getNextJob: (_, { type }) => {
+      if (jobs.length == 0) {
+        return null;
+      }
+      let jobId = jobs.pop();
       return Job.findOne({
         where: {
-          type: type
-        },
-        order: ["id", "desc"]
+          id: jobId
+        }
+      }).then(job => {
+        job.status = "processing";
+        job.save();
+        return job;
       });
     }
   }

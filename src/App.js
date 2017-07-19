@@ -17,6 +17,7 @@ const jobsListQuery = gql`
       name
       input
       output
+      status
     }
   }
 `;
@@ -34,11 +35,11 @@ const JobsList = ({ data: { loading, error, jobs } }) => {
   }
   return (
     <ul>
-      {jobs.map(job =>
+      {jobs.map(job => (
         <li key={job.id}>
-          {job.type}, {job.name}, {job.input}, {job.output}
+          {job.type}, {job.name}, {job.input}, {job.output}, {job.status}
         </li>
-      )}
+      ))}
     </ul>
   );
 };
@@ -60,7 +61,8 @@ function AddJobButton({ mutate, type }) {
 }
 
 // You can also use `graphql` for GraphQL mutations
-const AddJobButtonWithData = graphql(gql`
+const AddJobButtonWithData = graphql(
+  gql`
   mutation addJob($type: String!) {
     addJob(type: $type) {
       id
@@ -70,7 +72,8 @@ const AddJobButtonWithData = graphql(gql`
       output
     }
   }
-`)(AddJobButton);
+`
+)(AddJobButton);
 
 const JobsListWithData = graphql(jobsListQuery)(JobsList);
 

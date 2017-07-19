@@ -2,6 +2,7 @@
   "recommendations": [
     "esbenp.prettier-vscodet",
     "donjayamanne.python",
-    "RobinMalfait.prettier-eslint-vscode"
+    "RobinMalfait.prettier-eslint-vscode",
+    "kumar-harsh.graphql-for-vscode"
   ]
 }
