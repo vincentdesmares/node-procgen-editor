@@ -14,9 +14,20 @@ const client = new ApolloClient({
   })
 });
 
-let workerType = "heightmap";
+const loopTime = 1000;
+var argv = require("minimist")(process.argv.slice(2));
+console.dir(argv);
 
-const WorkerClass = require("./workers/" + workerType);
+let workerType = argv.t ? argv.t : "heightmap";
+console.log(`Starting a ${workerType} worker, will look for job every ${loopTime/1000}s`);
+
+let WorkerClass = null;
+try {
+  WorkerClass = require("./workers/" + workerType);
+} catch (error) {
+  console.log("[error] Worker could not be loaded: ", error.message);
+  return;
+}
 const worker = new WorkerClass();
 // client
 //   .query({
@@ -80,8 +91,7 @@ function checkForJobs() {
     })
     .then(({ data: { getNextJob: job } }) => {
       if (!job) {
-        console.log("No new job");
-        setTimeout(checkForJobs, 1000);
+        setTimeout(checkForJobs, loopTime);
         return;
       }
       console.log("Reiceived a new job", job);
