@@ -36,7 +36,22 @@ class JobsList extends Component {
       <ul>
         {jobs.map(job => (
           <li key={job.id}>
-            {job.type}, {job.name}, {job.input}, {job.output}, {job.status}
+            {job.id}
+            ,
+            {" "}
+            {job.type}
+            ,
+            {" "}
+            {job.name}
+            ,
+            {" "}
+            {job.input}
+            ,
+            {" "}
+            {job.output}
+            ,
+            {" "}
+            {job.status}
           </li>
         ))}
       </ul>
@@ -55,7 +70,23 @@ function AddJobButton({ mutate, type }) {
           refetchQueries: [{ query: jobsListQuery }]
         })}
     >
-      Upvote
+      Add job
+    </button>
+  );
+}
+
+// A mutation is made available on a callback called `mutate`
+// Other props of the wrapping component are passed through.
+function DeleteAllJobsButton({ mutate, type }) {
+  return (
+    <button
+      onClick={() =>
+        mutate({
+          variables: { type },
+          refetchQueries: [{ query: jobsListQuery }]
+        })}
+    >
+      Delete all jobs
     </button>
   );
 }
@@ -88,6 +119,15 @@ const AddJobButtonWithData = graphql(
 `
 )(AddJobButton);
 
+// You can also use `graphql` for GraphQL mutations
+const DeleteAllJobsButtonWithData = graphql(
+  gql`
+  mutation deleteAllJobs($type: String!) {
+    deleteAllJobs(type: $type)
+  }
+`
+)(DeleteAllJobsButton);
+
 const JobsListWithData = graphql(jobsListQuery, {
   name: "jobs",
   props: ({ jobs, ownProps }) => {
@@ -117,8 +157,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
+        <AddJobButtonWithData type={"heightmap"} />
+        <DeleteAllJobsButtonWithData type={"heightmap"} />
         <JobsListWithData />
-        <AddJobButtonWithData type={"ṕlop"} />
       </div>
     );
   }

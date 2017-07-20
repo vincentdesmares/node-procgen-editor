@@ -1,6 +1,6 @@
 const uuidv4 = require("uuid/v4");
 
-console.log(uuidv4());
+console.log("Uniq id for worker life:", uuidv4());
 
 const fetch = require("isomorphic-fetch");
 const ApolloModule = require("apollo-client");
@@ -35,9 +35,7 @@ const worker = new WorkerClass();
 //   .then(data => console.log(data))
 //   .catch(error => console.error(error));
 
-client
-  .mutate({
-    mutation: gql`
+const getNextJobQuery = gql`
       mutation getNextJob($type: String!) {
           getNextJob(type: $type) {
               id
@@ -47,23 +45,67 @@ client
               output
           }
       }
-    `,
-    variables: { type: "commandline" }
-  })
-  .then(({ data: { getNextJob: job } }) => {
-    if (!job) {
-      console.log("No new job");
-      return;
-    }
-    console.log("Reiceived a new job", job);
-    worker
-      .process(job)
-      .then(job => {
-        console.log("Job's done", job.id);
-        console.log("Updating job");
-      })
-      .catch(error => {
-        console.log("Job failed", error);
-      });
-  })
-  .catch(error => console.error(error));
+    `;
+
+const updateJobQuery = gql`
+      mutation updateJob(
+              $id: String,
+              $type: String,
+              $name: String,
+              $input: String,
+              $output: String,
+              $status: String
+          ) {
+          updateJob(id: $id,
+              type: $type,
+              name: $name,
+              input: $input,
+              output: $output
+              status: $status) {
+              id
+              type
+              name
+              input
+              output
+              status
+          }
+      }
+    `;
+
+function checkForJobs() {
+  client
+    .mutate({
+      mutation: getNextJobQuery,
+      variables: { type: "commandline" }
+    })
+    .then(({ data: { getNextJob: job } }) => {
+      if (!job) {
+        console.log("No new job");
+        setTimeout(checkForJobs, 1000);
+        return;
+      }
+      console.log("Reiceived a new job", job);
+      worker
+        .process(job)
+        .then(job => {
+          console.log("Job's done", job.id);
+          console.log("Updating job");
+          job.status = "done";
+          client
+            .mutate({
+              mutation: updateJobQuery,
+              variables: job
+            })
+            .then(job => {
+              console.log("Job saved!", job);
+              checkForJobs();
+            });
+        })
+        .catch(error => {
+          console.log("Job failed", error);
+        });
+    })
+    .catch(error => console.error(error));
+}
+
+checkForJobs();
