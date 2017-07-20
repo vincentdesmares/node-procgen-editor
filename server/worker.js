@@ -14,6 +14,10 @@ const client = new ApolloClient({
   })
 });
 
+let workerType = "heightmap";
+
+const WorkerClass = require("./workers/" + workerType);
+const worker = new WorkerClass();
 // client
 //   .query({
 //     query: gql`
@@ -46,5 +50,20 @@ client
     `,
     variables: { type: "commandline" }
   })
-  .then(data => console.log(data))
+  .then(({ data: { getNextJob: job } }) => {
+    if (!job) {
+      console.log("No new job");
+      return;
+    }
+    console.log("Reiceived a new job", job);
+    worker
+      .process(job)
+      .then(job => {
+        console.log("Job's done", job.id);
+        console.log("Updating job");
+      })
+      .catch(error => {
+        console.log("Job failed", error);
+      });
+  })
   .catch(error => console.error(error));
