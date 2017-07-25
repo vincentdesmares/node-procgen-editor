@@ -1,3 +1,5 @@
+import "tachyons/css/tachyons.min.css";
+import "material-design-icons/iconfont/material-icons.css";
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
@@ -8,7 +10,8 @@ import {
   ApolloProvider,
   createNetworkInterface
 } from "react-apollo";
-
+import { BrowserRouter, Link, Route } from "react-router-dom";
+import ProjectPage from "./components/page/projects";
 const jobsListQuery = gql`
   query jobsListQuery {
     jobs {
@@ -154,9 +157,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <Link to="/">Projects</Link>
         </div>
+        <Route exact path="/" component={ProjectPage} />
+        <Route exact path="/foo" component={() => <div>foooooo</div>} />
+
         <AddJobButtonWithData type={"heightmap"} />
         <DeleteAllJobsButtonWithData type={"heightmap"} />
         <JobsListWithData />
