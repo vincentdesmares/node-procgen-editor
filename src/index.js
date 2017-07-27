@@ -7,11 +7,7 @@ import {
   SubscriptionClient,
   addGraphQLSubscriptions
 } from "subscriptions-transport-ws";
-
 import { BrowserRouter, Link, Route } from "react-router-dom";
-
-import "./index.css";
-
 import {
   ApolloClient,
   gql,
@@ -19,6 +15,10 @@ import {
   ApolloProvider,
   createNetworkInterface
 } from "react-apollo";
+import { reducer as formReducer } from "redux-form";
+import { Provider } from "react-redux";
+
+import "./index.css";
 
 const wsClient = new SubscriptionClient(`ws://localhost:5000/subscriptions`, {
   reconnect: true,
@@ -44,7 +44,8 @@ const store = createStore(
     // todos: todoReducer,
     // users: userReducer,
     //routing: routerReducer,
-    apollo: client.reducer()
+    apollo: client.reducer(),
+    form: formReducer
   }),
   {}, // initial state
   compose(
@@ -59,7 +60,9 @@ const store = createStore(
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById("root")

@@ -1,5 +1,7 @@
 import sys
-sys.path.append('/home/cold/projects/node-procgen-editor/blender')
+#sys.path.append('/home/cold/projects/node-procgen-editor/blender')
+folder = '/Users/vincent/projects/node-procgen-editor/blender'
+sys.path.append(folder)
 from library.sceneManager import sceneManager
 import math
 import bpy
@@ -75,7 +77,7 @@ def main():
 
     bpy.context.scene.objects.unlink(cub2ref)
 
-    scene.exportToColladaFile('/home/cold/projects/node-procgen-editor/blender');
+    scene.exportToColladaFile(folder);
 
 
 if __name__ == "__main__":
