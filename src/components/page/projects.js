@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import ProjectList from "../project/list";
 import { Link } from "react-router-dom";
 
-class ProjectPage extends Component {
+class ProjectsPage extends Component {
   render() {
     return (
       <div>
@@ -22,4 +22,4 @@ class ProjectPage extends Component {
   }
 }
 
-export default ProjectPage;
+export default ProjectsPage;
