@@ -7,6 +7,7 @@ import "./App.css";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import ProjectsPage from "./components/page/projects";
 import ProjectPage from "./components/page/project";
+import TerrainsPage from "./components/page/terrains";
 import NewProjectPage from "./components/page/new-project";
 import JobsPage from "./components/page/jobs";
 
@@ -21,6 +22,11 @@ class App extends Component {
         <Route exact path="/" component={ProjectsPage} />
         <Route exact path="/projects/new" component={NewProjectPage} />
         <Route exact path="/projects/:projectId" component={ProjectPage} />
+        <Route
+          exact
+          path="/projects/:projectId/terrains"
+          component={TerrainsPage}
+        />
         <Route exact path="/jobs" component={JobsPage} />
       </div>
     );

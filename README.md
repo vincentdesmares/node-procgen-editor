@@ -73,6 +73,13 @@ ppa:thomas-schiex/blender
 sudo apt-get install blender
 ```
 
+### GIS deps
+
+```bash
+brew install postgresql postgis
+pg_ctl -D /usr/local/var/postgres/data -l /usr/local/var/postgres/server.log start
+```
+
 ## Starting
 
 ```bash
@@ -86,7 +93,31 @@ Generating a new test
 blender -b -P test2.py
 ```
 
+# Working with postgis
+
+Finding which GDAL drivers are installed (in case of rt_raster_to_gdal: Could not load the output GDAL driver)
+```sql
+SELECT short_name FROM ST_GDALDrivers();
+
+ALTER SYSTEM SET postgis.gdal_enabled_drivers TO 'ENABLE_ALL';
+SELECT pg_reload_conf();
+
+SELECT oid, lowrite(lo_open(oid, 131072), GTiff) As num_bytes
+ FROM
+ ( VALUES (lo_create(0),
+   ST_AsTIFF( (SELECT rast FROM terrain WHERE rid=1) )
+  ) ) As v(oid,GTiff);
+
+SELECT lo_export(18186, '/Users/vincent/projects/node-procgen-editor/public/test.tif');
+```
+
+```bash
+gdal_translate -scale 0 2470 0 65535 -ot UInt16 -outsize 100 100 -of ENVI public/assets/test.tif public/assets/test.bin
+```
+
 ## Project References
 [Create React App](https://github.com/facebookincubator/create-react-app)
 [Blender 2.78c Documentation](https://docs.blender.org/api/blender_python_api_2_78c_release/)
 [Visualize your assets online: A360.AutoDesk](https://a360.autodesk.com/viewer/)
+[Postgis Raster Doc](https://postgis.net/docs/using_raster_dataman.html)
+[Texturing a raster](http://blog.mastermaps.com/2013/10/textural-terrains-with-threejs.html)
