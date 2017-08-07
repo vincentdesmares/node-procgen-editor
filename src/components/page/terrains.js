@@ -29,12 +29,13 @@ class TerrainsPage extends Component {
             height: 200
           }}
         >
-          <Scene>
+          <Scene embedded>
             <Entity
-              position={{ x: 0, y: 200, z: 200 }}
+              position={{ x: 0, y: 80, z: 80 }}
               rotation={{ x: -50, y: 0, z: 0 }}
               camera
               look-controls
+              wasd-controls={{ acceleration: 200 }}
             />
             <Entity
               color-terrain-model={{
