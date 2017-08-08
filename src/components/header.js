@@ -8,7 +8,7 @@ class Header extends Component {
       <div className="App-header white pa3">
         <Link to="/">
           <h2 className="pa0 ma0 dib link white">
-            <i className="material-icons logo relative">language</i>
+            <i className="material-icons">language</i>
             Node Procgen
           </h2>
         </Link>

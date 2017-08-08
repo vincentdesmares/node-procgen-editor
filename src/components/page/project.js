@@ -9,24 +9,34 @@ class ProjectPage extends Component {
       <div>
         <span>Welcome to project {this.props.match.params.projectId} </span>
         <div>
-          Scenes
-        </div>
-        <div>
           <Link to={`/project/${this.props.match.params.projectId}/terrain`}>
-            Terrains
+            <i className="material-icons">landscape</i> Terrains
           </Link>
         </div>
         <div>
-          Zonings
+          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+            <i className="material-icons">texture</i> Zonings
+          </Link>
         </div>
         <div>
-          Entities
+          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+            <i className="material-icons">blur_on</i> Placements
+          </Link>
         </div>
         <div>
-          Placements
+          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+            <i className="material-icons">nature</i> Entities
+          </Link>
         </div>
         <div>
-          Assets
+          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+            <i className="material-icons">color_lens</i> Assets
+          </Link>
+        </div>
+        <div>
+          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+            <i className="material-icons">remove_red_eyes</i> scenes
+          </Link>
         </div>
       </div>
     );
