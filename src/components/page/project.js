@@ -12,7 +12,7 @@ class ProjectPage extends Component {
           Scenes
         </div>
         <div>
-          <Link to={`/projects/${this.props.match.params.projectId}/terrains`}>
+          <Link to={`/project/${this.props.match.params.projectId}/terrain`}>
             Terrains
           </Link>
         </div>

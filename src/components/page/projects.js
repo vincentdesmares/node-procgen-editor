@@ -8,7 +8,7 @@ class ProjectsPage extends Component {
     return (
       <div>
         <Link
-          to="/projects/new"
+          to="/project/new"
           title="Will open the project creation page"
           className="no-underline near-white bg-animate bg-near-black hover-bg-gray inline-flex items-center ma1 tc br2 pa1 fr mr2 mt2"
         >

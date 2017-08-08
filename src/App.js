@@ -8,24 +8,36 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import ProjectsPage from "./components/page/projects";
 import ProjectPage from "./components/page/project";
 import TerrainsPage from "./components/page/terrains";
+import TerrainPage from "./components/page/terrain";
 import NewProjectPage from "./components/page/new-project";
 import JobsPage from "./components/page/jobs";
+import Header from "./components/header";
+
+import "aframe";
+import "aframe-particle-system-component";
+import "aframe-terrain-model-component";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <Link to="/">Projects</Link>
-          <Link to="/jobs">Jobs</Link>
-        </div>
+        <Header />
         <Route exact path="/" component={ProjectsPage} />
-        <Route exact path="/projects/new" component={NewProjectPage} />
-        <Route exact path="/projects/:projectId" component={ProjectPage} />
+        <Route exact path="/project/new" component={NewProjectPage} />
         <Route
           exact
-          path="/projects/:projectId/terrains"
+          path="/project/:projectId([0-9]+)"
+          component={ProjectPage}
+        />
+        <Route
+          exact
+          path="/project/:projectId/terrain"
           component={TerrainsPage}
+        />
+        <Route
+          exact
+          path="/project/:projectId/terrain/:terrainId([0-9]+)"
+          component={TerrainPage}
         />
         <Route exact path="/jobs" component={JobsPage} />
       </div>

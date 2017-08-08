@@ -113,6 +113,31 @@ SELECT lo_export(18186, '/Users/vincent/projects/node-procgen-editor/public/test
 
 ```bash
 gdal_translate -scale 0 2470 0 65535 -ot UInt16 -outsize 100 100 -of ENVI public/assets/test.tif public/assets/test.bin
+
+color-relief public/assets/test.tif data/color-relief.txt public/assets/test-relief.tif
+
+gdaldem hillshade -combined public/assets/test.tif public/assets/test-hillshade.tif
+
+gdaldem slope public/assets/test.tif public/assets/test-slope.tif
+gdaldem color-relief public/assets/test-slope.tif data/color-slope.txt public/assets/test-slopeshade.tif
+```
+Tif -> PNG
+```bash
+gdal_translate -of PNG -scale public/assets/test.tif public/assets/test-output.png
+```
+Generate mask
+```bash
+gdaldem color-relief public/test-bicolor.tif data/color-relief-0-1.txt public/assets/test-relief-bicolor.tif
+gdal_translate -of PNG -scale public/assets/test-relief-bicolor.tif public/assets/test-output-bicolor.png
+```
+
+Preview all the values in a raster :
+
+```sql
+SELECT (pvc).*
+FROM (SELECT ST_ValueCount(rast) As pvc
+    FROM terrain WHERE rid=1) As foo
+    ORDER BY (pvc).value;
 ```
 
 ## Project References
