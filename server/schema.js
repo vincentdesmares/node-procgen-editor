@@ -2,7 +2,7 @@ const { makeExecutableSchema } = require("graphql-tools");
 
 const { find, filter } = require("lodash");
 
-const { Job } = require("./models");
+const { Job, Project } = require("./models");
 
 const { PubSub } = require("graphql-subscriptions");
 const pubsub = new PubSub();
@@ -17,6 +17,10 @@ const typeDefs = `
     status: String
     # posts: [Post]
   }
+  type Project {
+    id: Int!
+    name: String
+  }
   # the schema allows the following query:
   type Query {
     jobs: [Job]
@@ -27,6 +31,7 @@ const typeDefs = `
     addJob (
       type: String!
     ): Job
+    
     getNextJob (
       type: String!
     ): Job
@@ -41,6 +46,10 @@ const typeDefs = `
     deleteAllJobs (
       type: String
     ): String
+
+    addProject (
+      name: String!
+    ): Project
   }
   type Subscription {
     jobUpdated(type: String!): Job
@@ -119,6 +128,13 @@ const resolvers = {
     deleteAllJobs: (_, { type }) => {
       jobs = [];
       return Job.destroy({ where: {} }).then(() => "destroyed");
+    },
+    addProject: (_, { name }) => {
+      return Project.create({
+        name
+      }).then(function(project) {
+        return project;
+      });
     }
   },
   Subscription: {

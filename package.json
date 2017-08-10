@@ -7,12 +7,18 @@
     "node": "^7"
   },
   "dependencies": {
+    "aframe": "^0.6.1",
+    "aframe-particle-system-component": "^1.0.10",
+    "aframe-react": "^4.3.0",
+    "aframe-terrain-model-component": "^0.2.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "fast-simplex-noise": "^3.2.0",
     "graphql-server-express": "^1.0.0",
     "graphql-subscriptions": "^0.4.4",
     "graphql-tools": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "material-design-icons": "^3.0.1",
     "minimist": "^1.2.0",
     "pg": "6.3.0",
     "pg-hstore": "^2.3.2",
@@ -21,7 +27,12 @@
     "react": "^15.6.1",
     "react-apollo": "^1.4.2",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.2",
+    "react-router-redux": "^4.0.8",
+    "redux-form": "^7.0.3",
+    "seedrandom": "^2.4.3",
     "sequelize": "^4.3.2",
     "sequelize-cli": "^2.7.0",
     "sequelize-postgres": "^1.7.0",
@@ -30,8 +41,11 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.1",
+    "flow-bin": "^0.51.0",
     "react-scripts": "1.0.7"
   },
   "scripts": {
