@@ -11,6 +11,9 @@ module.exports = function(sequelize, DataTypes) {
       status: {
         type: Sequelize.STRING
       },
+      metadata: {
+        type: Sequelize.STRING
+      },
       projectId: {
         type: Sequelize.INTEGER
       }

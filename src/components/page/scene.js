@@ -25,7 +25,7 @@ class ScenePage extends Component {
         jobs: [
           {
             id: 13,
-            status: "scheduled",
+            status: "processing",
             type: "zoning"
           },
           {
@@ -36,6 +36,11 @@ class ScenePage extends Component {
           {
             id: 18,
             status: "scheduled",
+            type: "zoning"
+          },
+          {
+            id: 19,
+            status: "failed",
             type: "zoning"
           }
         ]

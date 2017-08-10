@@ -28,12 +28,11 @@ class Heightmap extends WorkerAbstract {
 
         if (err) throw err;
         console.log("Saved!");
+        resolve(job);
+        if (job.error) {
+          reject("No :(");
+        }
       });
-
-      resolve(job);
-      if (job.error) {
-        reject("No :(");
-      }
     });
   }
 }
