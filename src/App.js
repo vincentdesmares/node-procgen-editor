@@ -9,6 +9,9 @@ import ProjectsPage from "./components/page/projects";
 import ProjectPage from "./components/page/project";
 import TerrainsPage from "./components/page/terrains";
 import TerrainPage from "./components/page/terrain";
+import ZoningsPage from "./components/page/zonings";
+import ScenesPage from "./components/page/scenes";
+import ScenePage from "./components/page/scene";
 import NewProjectPage from "./components/page/new-project";
 import JobsPage from "./components/page/jobs";
 import Header from "./components/header";
@@ -36,8 +39,19 @@ class App extends Component {
         />
         <Route
           exact
+          path="/project/:projectId/zoning"
+          component={ZoningsPage}
+        />
+        <Route
+          exact
           path="/project/:projectId/terrain/:terrainId([0-9]+)"
           component={TerrainPage}
+        />
+        <Route exact path="/project/:projectId/scene" component={ScenesPage} />
+        <Route
+          exact
+          path="/project/:projectId/scene/:sceneId([0-9]+)"
+          component={ScenePage}
         />
         <Route exact path="/jobs" component={JobsPage} />
       </div>

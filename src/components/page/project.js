@@ -19,7 +19,7 @@ class ProjectPage extends Component {
           </Link>
         </div>
         <div>
-          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+          <Link to={`/project/${this.props.match.params.projectId}/placements`}>
             <i className="material-icons">blur_on</i> Placements
           </Link>
         </div>
@@ -29,12 +29,12 @@ class ProjectPage extends Component {
           </Link>
         </div>
         <div>
-          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+          <Link to={`/project/${this.props.match.params.projectId}/assets`}>
             <i className="material-icons">color_lens</i> Assets
           </Link>
         </div>
         <div>
-          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+          <Link to={`/project/${this.props.match.params.projectId}/scene`}>
             <i className="material-icons">remove_red_eyes</i> scenes
           </Link>
         </div>

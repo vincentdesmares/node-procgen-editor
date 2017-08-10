@@ -39,6 +39,6 @@ class Heightmap extends WorkerAbstract {
 }
 
 var heightmap = new Heightmap();
-heightmap.process({ test: "test" });
+//heightmap.process({ test: "test" });
 
-//module.exports = Heightmap;
+module.exports = Heightmap;
