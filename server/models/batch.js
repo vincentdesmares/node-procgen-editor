@@ -30,6 +30,11 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: "sceneId",
       sourceKey: "id"
     });
+    this.hasMany(models.Job, {
+      as: "jobs",
+      foreignKey: "batchId",
+      sourceKey: "id"
+    });
   };
   return Batch;
 };

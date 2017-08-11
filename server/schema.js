@@ -15,7 +15,7 @@ const typeDefs = `
     input: String
     output: String
     status: String
-    # posts: [Post]
+    batch: Batch
   }
   type Scene {
     id: Int!
@@ -29,6 +29,7 @@ const typeDefs = `
     metadata: String
     project: Project
     scene: Scene
+    jobs: [Job]
   }
   type Project {
     id: Int!
@@ -123,7 +124,13 @@ const resolvers = {
     },
     project: (_, { id }) =>
       Project.findById(id, {
-        include: [{ model: Scene, as: "scenes", include: ["batches"] }]
+        include: [
+          {
+            model: Scene,
+            as: "scenes",
+            include: [{ model: Batch, as: "batches", include: ["jobs"] }]
+          }
+        ]
       }),
     // projectScenes: obj => {
     //   return { id: 1 };
