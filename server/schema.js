@@ -2,7 +2,7 @@ const { makeExecutableSchema } = require("graphql-tools");
 
 const { find, filter } = require("lodash");
 
-const { Job, Project } = require("./models");
+const { Job, Project, Scene, Batch } = require("./models");
 
 const { PubSub } = require("graphql-subscriptions");
 const pubsub = new PubSub();
@@ -17,14 +17,34 @@ const typeDefs = `
     status: String
     # posts: [Post]
   }
+  type Scene {
+    id: Int!
+    name: String
+    status: String
+    batches: [Batch]
+  }
+  type Batch {
+    id: Int!
+    status: String
+    metadata: String
+    project: Project
+    scene: Scene
+  }
   type Project {
     id: Int!
     name: String
+    scenes: [Scene]
   }
   # the schema allows the following query:
   type Query {
     jobs: [Job]
     job(id: Int!): Job
+    projects: [Project]
+    project(id: Int!): Project
+    scenes: [Scene]
+    scene(id: Int!): Scene,
+    batches: [Batch]
+    batch(id: Int!): Batch
   }
   # this schema allows the following mutation:
   type Mutation {
@@ -85,7 +105,56 @@ const resolvers = {
           return [];
         });
     },
-    job: (_, { id }) => Job.findById(id)
+    job: (_, { id }) => Job.findById(id),
+    projects: () => {
+      console.log("projects called");
+      return Project.findAll({
+        order: [["id", "desc"]],
+        include: [{ model: Scene, as: "scenes", include: ["batches"] }]
+      })
+        .then(projects => {
+          //projects[0].scenes = [{ id: 1 }];
+          return projects;
+        })
+        .catch(function(err) {
+          console.log(err);
+          return [];
+        });
+    },
+    project: (_, { id }) =>
+      Project.findById(id, {
+        include: [{ model: Scene, as: "scenes", include: ["batches"] }]
+      }),
+    // projectScenes: obj => {
+    //   return { id: 1 };
+    // },
+    scenes: () => {
+      console.log("scenes called");
+      return Scene.findAll({ order: [["id", "desc"]] })
+        .then(scenes => {
+          return scenes;
+        })
+        .catch(function(err) {
+          console.log(err);
+          return [];
+        });
+    },
+    scene: (_, { id }) => Scene.findById(id),
+    batches: () => {
+      console.log("batches called");
+      return Batch.findAll({
+        order: [["id", "desc"]]
+      })
+        .then(batches => {
+          //projects[0].scenes = [{ id: 1 }];
+          return batches;
+        })
+        .catch(function(err) {
+          console.log(err);
+          return [];
+        });
+    },
+    batch: (_, { id }) => Batch.findById(id)
   },
   Mutation: {
     updateJob: (_, { id, type, name, input, output, status }) => {

@@ -2,42 +2,34 @@
 const Sequelize = require("sequelize");
 
 module.exports = function(sequelize, DataTypes) {
-  var Scene = sequelize.define(
-    "Scene",
+  var Batch = sequelize.define(
+    "Batch",
     {
-      name: {
-        type: Sequelize.STRING
-      },
       status: {
         type: Sequelize.STRING
       },
-      metadata: {
-        type: Sequelize.STRING
-      },
       projectId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Project",
-          key: "id"
-        }
+        type: Sequelize.INTEGER
+      },
+      sceneId: {
+        type: Sequelize.INTEGER
       }
     },
     {
       freezeTableName: true,
-      tableName: "scene"
+      tableName: "batch"
     }
   );
 
-  Scene.associate = function(models) {
+  Batch.associate = function(models) {
     this.belongsTo(models.Project, {
       foreignKey: "projectId",
       sourceKey: "id"
     });
-    this.hasMany(models.Batch, {
-      as: "batches",
+    this.belongsTo(models.Scene, {
       foreignKey: "sceneId",
       sourceKey: "id"
     });
   };
-  return Scene;
+  return Batch;
 };

@@ -13,7 +13,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       sceneId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      projectId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

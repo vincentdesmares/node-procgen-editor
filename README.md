@@ -51,7 +51,7 @@ Be sure to run this command when running the project on Ubuntu or you may have t
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
 
-Get project
+Get the project
 
 ```bash
 git clone git@github.com:vincentdesmares/node-procgen-editor.git
@@ -85,6 +85,12 @@ pg_ctl -D /usr/local/var/postgres/data -l /usr/local/var/postgres/server.log sta
 ```bash
 yarn start-all
 ```
+
+A page should open in your browser at localhost:3000, then you can open:
+```
+http://localhost:8080/graphiql
+```
+To be able to discover the project schema.
 
 ## Commands
 
