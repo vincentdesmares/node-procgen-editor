@@ -5,5 +5,5 @@
     "editor.formatOnSave": true,
     "editor.scrollBeyondLastLine": false,
     "flow.useNPMPackagedFlow": true,
-    "javascript.validate.enable": false,
+    "javascript.validate.enable": false
 }

@@ -1,13 +1,7 @@
 //@flow
 import React, { Component } from "react";
 import ProjectPreview from "./preview";
-import {
-  ApolloClient,
-  gql,
-  graphql,
-  ApolloProvider,
-  createNetworkInterface
-} from "react-apollo";
+import { gql, graphql } from "react-apollo";
 
 const projectListQuery = gql`
   query projectListQuery {

@@ -1,6 +1,5 @@
 //@flow
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Entity, Scene } from "aframe-react";
 
 class Terrain3dPreview extends Component {

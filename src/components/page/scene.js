@@ -2,13 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SceneStep from "../scene/step";
-import {
-  ApolloClient,
-  gql,
-  graphql,
-  ApolloProvider,
-  createNetworkInterface
-} from "react-apollo";
+import { gql, graphql } from "react-apollo";
 
 const getQuery = gql`
   query sceneQuery($id: Int!) {
@@ -30,7 +24,6 @@ class ScenePage extends Component {
 
     const steps = [
       {
-        batchId: 12,
         order: 1,
         status: "done",
         jobs: [
@@ -42,7 +35,6 @@ class ScenePage extends Component {
         ]
       },
       {
-        batchId: 13,
         order: 2,
         status: "processing",
         jobs: [
@@ -69,7 +61,6 @@ class ScenePage extends Component {
         ]
       },
       {
-        batchId: 12,
         order: 3,
         jobs: [
           {
@@ -80,7 +71,6 @@ class ScenePage extends Component {
         ]
       },
       {
-        batchId: null,
         order: 4,
         jobs: [
           {

@@ -11,7 +11,7 @@ class ScenesPage extends Component {
           Welcome to project {this.props.match.params.projectId} scenes
         </span>
         <Link
-          to="/project/new"
+          to={`/project/${this.props.match.params.projectId}/scene/new`}
           title="Will open the project creation page"
           className="no-underline near-white bg-animate bg-near-black hover-bg-gray inline-flex items-center ma1 tc br2 pa1 fr mr2 mt2"
         >

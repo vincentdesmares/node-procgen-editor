@@ -1,14 +1,6 @@
 //@flow
 import React, { Component } from "react";
-import ProjectList from "../project/list";
-import { Link } from "react-router-dom";
-import {
-  ApolloClient,
-  gql,
-  graphql,
-  ApolloProvider,
-  createNetworkInterface
-} from "react-apollo";
+import { gql, graphql } from "react-apollo";
 
 const jobsListQuery = gql`
   query jobsListQuery {

@@ -1,6 +1,5 @@
 //@flow
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Terrain3dPreview from "../terrain/preview-3d";
 
 class TerrainPage extends Component {

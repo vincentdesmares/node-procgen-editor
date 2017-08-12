@@ -1,15 +1,9 @@
-//@flow
 import React, { Component } from "react";
 import NewProjectForm from "./../project/form";
 import { addProjectQuery } from "./../project/graphql";
-import {
-  ApolloClient,
-  gql,
-  graphql,
-  ApolloProvider,
-  createNetworkInterface
-} from "react-apollo";
+import { graphql } from "react-apollo";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class NewProjectPage extends Component {
   constructor() {
@@ -46,5 +40,9 @@ class NewProjectPage extends Component {
     );
   }
 }
+
+NewProjectPage.PropTypes = {
+  mutate: PropTypes.func
+};
 
 export default graphql(addProjectQuery)(NewProjectPage);

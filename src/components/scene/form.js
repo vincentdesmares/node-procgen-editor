@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 
-class NewProject extends Component {
+class NewScene extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -15,7 +15,7 @@ class NewProject extends Component {
             name="name"
             component="input"
             type="text"
-            placeholder="Project Name"
+            placeholder="Scene Name"
             props={{
               className: "input-reset ba b--black-20 pa2 mb2 db w-100"
             }}
@@ -31,5 +31,5 @@ class NewProject extends Component {
 
 export default reduxForm({
   // a unique name for the form
-  form: "project"
-})(NewProject);
+  form: "Scene"
+})(NewScene);

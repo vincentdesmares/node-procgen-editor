@@ -1,6 +1,5 @@
 //@flow
 import React, { Component } from "react";
-import TerrainList from "../terrain/list";
 import { Link } from "react-router-dom";
 
 class ZoningsPage extends Component {

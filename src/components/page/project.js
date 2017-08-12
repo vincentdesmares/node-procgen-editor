@@ -1,6 +1,5 @@
 //@flow
 import React, { Component } from "react";
-import ProjectList from "../project/list";
 import { Link } from "react-router-dom";
 
 class ProjectPage extends Component {

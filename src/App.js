@@ -1,18 +1,18 @@
 import "tachyons/css/tachyons.min.css";
 import "material-design-icons/iconfont/material-icons.css";
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import ProjectsPage from "./components/page/projects";
 import ProjectPage from "./components/page/project";
+import NewProjectPage from "./components/page/projectCreate";
 import TerrainsPage from "./components/page/terrains";
 import TerrainPage from "./components/page/terrain";
 import ZoningsPage from "./components/page/zonings";
 import ScenesPage from "./components/page/scenes";
 import ScenePage from "./components/page/scene";
-import NewProjectPage from "./components/page/new-project";
+import NewScenePage from "./components/page/sceneCreate";
 import JobsPage from "./components/page/jobs";
 import Header from "./components/header";
 
@@ -52,6 +52,11 @@ class App extends Component {
           exact
           path="/project/:projectId/scene/:sceneId([0-9]+)"
           component={ScenePage}
+        />
+        <Route
+          exact
+          path="/project/:projectId/scene/new"
+          component={NewScenePage}
         />
         <Route exact path="/jobs" component={JobsPage} />
       </div>

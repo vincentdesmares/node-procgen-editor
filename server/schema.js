@@ -52,7 +52,10 @@ const typeDefs = `
     addJob (
       type: String!
     ): Job
-    
+    addScene (
+      name: String!
+      projectId: Int!
+    ): Scene
     getNextJob (
       type: String!
     ): Job
@@ -114,7 +117,6 @@ const resolvers = {
         include: [{ model: Scene, as: "scenes", include: ["batches"] }]
       })
         .then(projects => {
-          //projects[0].scenes = [{ id: 1 }];
           return projects;
         })
         .catch(function(err) {
@@ -132,9 +134,6 @@ const resolvers = {
           }
         ]
       }),
-    // projectScenes: obj => {
-    //   return { id: 1 };
-    // },
     scenes: (_, { projectId }) => {
       console.log("scenes called");
       let where = {};
@@ -187,6 +186,13 @@ const resolvers = {
       }).then(function(job) {
         jobs.push(job.id);
         return job;
+      });
+    },
+    addScene: (_, { name, projectId }) => {
+      return Scene.create({
+        name,
+        projectId,
+        status: "virgin"
       });
     },
     getNextJob: (_, { type }) => {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
@@ -7,11 +7,9 @@ import {
   SubscriptionClient,
   addGraphQLSubscriptions
 } from "subscriptions-transport-ws";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import {
   ApolloClient,
-  gql,
-  graphql,
   ApolloProvider,
   createNetworkInterface
 } from "react-apollo";
