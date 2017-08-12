@@ -20,7 +20,7 @@ class NewProjectPage extends Component {
   }
 
   render() {
-    const { mutate, type } = this.props;
+    const { mutate } = this.props;
     const { redirectToProject } = this.state;
 
     if (redirectToProject) {

@@ -42,7 +42,7 @@ const typeDefs = `
     job(id: Int!): Job
     projects: [Project]
     project(id: Int!): Project
-    scenes: [Scene]
+    scenes(projectId: Int): [Scene]
     scene(id: Int!): Scene,
     batches: [Batch]
     batch(id: Int!): Batch
@@ -135,9 +135,13 @@ const resolvers = {
     // projectScenes: obj => {
     //   return { id: 1 };
     // },
-    scenes: () => {
+    scenes: (_, { projectId }) => {
       console.log("scenes called");
-      return Scene.findAll({ order: [["id", "desc"]] })
+      let where = {};
+      if (projectId) {
+        where.projectId = projectId;
+      }
+      return Scene.findAll({ where, order: [["id", "desc"]] })
         .then(scenes => {
           return scenes;
         })

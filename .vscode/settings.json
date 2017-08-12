@@ -3,5 +3,7 @@
     "editor.fontFamily": "monaco, 'Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
     "editor.insertSpaces": true,
     "editor.formatOnSave": true,
-    "editor.scrollBeyondLastLine": false
+    "editor.scrollBeyondLastLine": false,
+    "flow.useNPMPackagedFlow": true,
+    "javascript.validate.enable": false,
 }

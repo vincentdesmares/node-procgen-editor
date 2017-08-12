@@ -1,20 +1,42 @@
 //@flow
 import React, { Component } from "react";
 import ProjectPreview from "./preview";
+import {
+  ApolloClient,
+  gql,
+  graphql,
+  ApolloProvider,
+  createNetworkInterface
+} from "react-apollo";
+
+const projectListQuery = gql`
+  query projectListQuery {
+    projects {
+      id
+      name
+    }
+  }
+`;
 
 class ProjectList extends Component {
   render() {
+    const { projects: { projects, loading } } = this.props;
+
+    if (loading) {
+      return <p>Loading ...</p>;
+    }
+
     return (
       <div>
-        <ProjectPreview />
-        <ProjectPreview />
-        <ProjectPreview />
-        <ProjectPreview />
-        <ProjectPreview />
-        <ProjectPreview />
+        {projects.map(project => (
+          <ProjectPreview key={project.id} project={project} />
+        ))}
       </div>
     );
   }
 }
+const projectListWithData = graphql(projectListQuery, { name: "projects" })(
+  ProjectList
+);
 
-export default ProjectList;
+export default projectListWithData;

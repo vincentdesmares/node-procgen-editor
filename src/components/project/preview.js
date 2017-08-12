@@ -6,7 +6,7 @@ class ProjectPreview extends Component {
   render() {
     return (
       <Link
-        to="/project/1"
+        to={`/project/${this.props.project.id}`}
         className="db mw5 black link dim fl w-20 pa2"
         title="Frank Ocean's Blonde on Apple Music"
       >
@@ -18,7 +18,7 @@ class ProjectPreview extends Component {
 
         <dl className="mt2 f6 lh-copy">
           <dt className="clip">Title</dt>
-          <dd className="ml0 fw9">The hunt</dd>
+          <dd className="ml0 fw9">{this.props.project.name}</dd>
           <dt className="clip">Artist</dt>
           <dd className="ml0 gray">last edit: 22 Jan</dd>
         </dl>

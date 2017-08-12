@@ -12,5 +12,13 @@
   "rules": {
     // disable rules from base configurations
     "no-console": "off"
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
   }
 }

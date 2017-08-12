@@ -1,20 +1,46 @@
 //@flow
 import React, { Component } from "react";
 import ScenePreview from "./preview";
+import {
+  ApolloClient,
+  gql,
+  graphql,
+  ApolloProvider,
+  createNetworkInterface
+} from "react-apollo";
+
+const listQuery = gql`
+  query projectListQuery($projectId: Int) {
+    scenes(projectId: $projectId) {
+      id
+      name
+    }
+  }
+`;
 
 class SceneList extends Component {
   render() {
+    const { scenes: { scenes, loading } } = this.props;
+
+    if (loading) {
+      return <p>Loading ...</p>;
+    }
+
     return (
       <div>
-        <ScenePreview />
-        <ScenePreview />
-        <ScenePreview />
-        <ScenePreview />
-        <ScenePreview />
-        <ScenePreview />
+        {scenes.map(scene => <ScenePreview key={scene.id} scene={scene} />)}
       </div>
     );
   }
 }
 
-export default SceneList;
+const listWithData = graphql(listQuery, {
+  name: "scenes",
+  options: ({ projectId }) => ({
+    variables: {
+      projectId
+    }
+  })
+})(SceneList);
+
+export default listWithData;

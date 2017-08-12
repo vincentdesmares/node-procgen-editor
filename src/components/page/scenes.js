@@ -19,7 +19,7 @@ class ScenesPage extends Component {
           <span className="f6 ml1 pr2">Create scene</span>
         </Link>
         <div className="cb" />
-        <SceneList />
+        <SceneList projectId={this.props.match.params.projectId} />
       </div>
     );
   }

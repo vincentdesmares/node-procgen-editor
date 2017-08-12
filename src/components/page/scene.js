@@ -2,9 +2,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SceneStep from "../scene/step";
+import {
+  ApolloClient,
+  gql,
+  graphql,
+  ApolloProvider,
+  createNetworkInterface
+} from "react-apollo";
+
+const getQuery = gql`
+  query sceneQuery($id: Int!) {
+    scene(id: $id) {
+      id
+      name
+      status
+    }
+  }
+`;
 
 class ScenePage extends Component {
   render() {
+    const { scene: { scene, loading } } = this.props;
+
+    if (loading) {
+      return <p>Loading ...</p>;
+    }
+
     const steps = [
       {
         batchId: 12,
@@ -70,8 +93,7 @@ class ScenePage extends Component {
     ];
     return (
       <div className="pa2">
-        <span>Welcome to project {this.props.match.params.projectId} </span>
-        <span>Scene {this.props.match.params.sceneId} </span>
+        <h2 className="fl">{scene.name} </h2>
         <Link
           to="/project/new"
           title="Will open the project creation page"
@@ -101,4 +123,13 @@ class ScenePage extends Component {
   }
 }
 
-export default ScenePage;
+const getWithData = graphql(getQuery, {
+  name: "scene",
+  options: ({ match }) => ({
+    variables: {
+      id: match.params.sceneId
+    }
+  })
+})(ScenePage);
+
+export default getWithData;
