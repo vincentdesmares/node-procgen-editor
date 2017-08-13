@@ -10,6 +10,7 @@ class Heightmap extends WorkerAbstract {
 
   process(job) {
     return new Promise(function(resolve, reject) {
+      const config = job.input != "" ? JSON.parse(job.input) : {};
       const rng = seedrandom("hello");
       const noiseGen = new FastSimplexNoise({
         frequency: 0.01,
@@ -18,7 +19,7 @@ class Heightmap extends WorkerAbstract {
         octaves: 8,
         random: rng
       });
-      fs.open("./test.xyz", "w", function(err, file) {
+      fs.open(`./heightmap-${job.id}.xyz`, "w", function(err, file) {
         for (let y = 0; y < 100; y++) {
           for (let x = 0; x < 100; x++) {
             let z = noiseGen.scaled2D(x, y);

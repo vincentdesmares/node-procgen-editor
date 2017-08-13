@@ -1,11 +1,11 @@
 //@flow
 import React, { Component } from "react";
 
-class Step extends Component {
+class Slot extends Component {
   render() {
     let statusIcon = null;
     let backgroundColor = "bg-white";
-    switch (this.props.job.status) {
+    switch (this.props.slot.status) {
       case "processing":
         statusIcon = <i className="material-icons rotating">refresh</i>;
         backgroundColor = "bg-light-yellow";
@@ -28,10 +28,10 @@ class Step extends Component {
     return (
       <div className={`ba b--blue ma1 pa1 ${backgroundColor}`}>
         {statusIcon}
-        Generate {this.props.job.type}
+        Generate {this.props.slot.type}
       </div>
     );
   }
 }
 
-export default Step;
+export default Slot;

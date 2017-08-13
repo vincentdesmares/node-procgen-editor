@@ -23,7 +23,7 @@ class ProjectPage extends Component {
           </Link>
         </div>
         <div>
-          <Link to={`/project/${this.props.match.params.projectId}/zoning`}>
+          <Link to={`/project/${this.props.match.params.projectId}/entities`}>
             <i className="material-icons">nature</i> Entities
           </Link>
         </div>

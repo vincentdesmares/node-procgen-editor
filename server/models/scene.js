@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         type: Sequelize.STRING
       },
       metadata: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       projectId: {
         type: Sequelize.INTEGER,

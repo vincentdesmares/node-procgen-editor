@@ -10,7 +10,8 @@
     "es6": true
   },
   "plugins": [
-    "react"
+    "react",
+    "async-await"
   ],
   "rules": {
     // disable rules from base configurations

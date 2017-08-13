@@ -21,6 +21,7 @@ const typeDefs = `
     id: Int!
     name: String
     status: String
+    metadata: String
     batches: [Batch]
   }
   type Batch {
@@ -67,10 +68,16 @@ const typeDefs = `
       output: String
       status: String
     ): Job
+    updateScene(
+      id: Int!
+      metadata: String
+    ): Scene
+    runGeneration(
+      sceneId: Int!
+    ): Scene
     deleteAllJobs (
       type: String
     ): String
-
     addProject (
       name: String!
     ): Project
@@ -140,7 +147,17 @@ const resolvers = {
       if (projectId) {
         where.projectId = projectId;
       }
-      return Scene.findAll({ where, order: [["id", "desc"]] })
+      return Scene.findAll({
+        where,
+        order: [["id", "desc"]],
+        include: [
+          {
+            model: Batch,
+            as: "batches",
+            include: [{ model: Job, as: "jobs" }]
+          }
+        ]
+      })
         .then(scenes => {
           return scenes;
         })
@@ -192,7 +209,16 @@ const resolvers = {
       return Scene.create({
         name,
         projectId,
+        metadata: "{}",
         status: "virgin"
+      });
+    },
+    updateScene: (_, { id, metadata }) => {
+      return Scene.findById(id).then(function(scene) {
+        scene.metadata = metadata;
+        scene.save();
+        pubsub.publish("sceneUpdated", { sceneUpdated: scene });
+        return scene;
       });
     },
     getNextJob: (_, { type }) => {
@@ -221,6 +247,22 @@ const resolvers = {
       }).then(function(project) {
         return project;
       });
+    },
+    runGeneration: async (_, { sceneId }) => {
+      console.log(`Generating batches and jobs for scene ${sceneId}`);
+      let scene = await Scene.findById(sceneId); //.then(scene => {
+      console.log("scene found", scene);
+      let metadata = JSON.parse(scene.metadata);
+      for (let i = 0; i < metadata.steps.length; i++) {
+        let batch = await Batch.create({
+          projectId: scene.projectId,
+          sceneId: scene.id,
+          status: "pending"
+        });
+        metadata.steps[i].batchId = batch.id;
+      }
+      scene.metadata = JSON.stringify(metadata);
+      return await scene.save();
     }
   },
   Subscription: {

@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       metadata: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       projectId: {
         type: Sequelize.INTEGER
