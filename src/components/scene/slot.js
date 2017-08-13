@@ -28,7 +28,7 @@ class Slot extends Component {
     return (
       <div className={`ba b--blue ma1 pa1 ${backgroundColor}`}>
         {statusIcon}
-        Generate {this.props.slot.type}
+        Job[{this.props.slot.jobId}] : Generate {this.props.slot.type}
       </div>
     );
   }

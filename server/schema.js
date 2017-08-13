@@ -254,12 +254,25 @@ const resolvers = {
       console.log("scene found", scene);
       let metadata = JSON.parse(scene.metadata);
       for (let i = 0; i < metadata.steps.length; i++) {
+        const step = metadata.steps[i];
         let batch = await Batch.create({
           projectId: scene.projectId,
           sceneId: scene.id,
           status: "pending"
         });
         metadata.steps[i].batchId = batch.id;
+        if (step.slots) {
+          for (let slotIndex = 0; slotIndex < step.slots.length; slotIndex++) {
+            let slot = step.slots[slotIndex];
+            let job = await Job.create({
+              type: slot.type,
+              name: `${slot.type} job`,
+              status: "pending",
+              batchId: batch.id
+            });
+            metadata.steps[i].slots[slotIndex].jobId = job.id;
+          }
+        }
       }
       scene.metadata = JSON.stringify(metadata);
       return await scene.save();
