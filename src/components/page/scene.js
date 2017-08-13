@@ -65,7 +65,6 @@ class ScenePage extends Component {
               const batch = scene.batches
                 ? scene.batches.find(batch => step.batchId === batch.id)
                 : null;
-              console.log(scene.batches);
               return <SceneStep key={index} step={step} batch={batch} />;
             })}
           <div className="cb" />

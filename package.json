@@ -12,8 +12,6 @@
     "aframe-react": "^4.3.0",
     "aframe-terrain-model-component": "^0.2.3",
     "body-parser": "^1.17.2",
-    "eslint-plugin-async-await": "^0.0.0",
-    "eslint-plugin-flowtype": "^2.35.0",
     "express": "^4.15.3",
     "fast-simplex-noise": "^3.2.0",
     "graphql-server-express": "^1.0.0",
@@ -22,7 +20,7 @@
     "isomorphic-fetch": "^2.2.1",
     "material-design-icons": "^3.0.1",
     "minimist": "^1.2.0",
-    "pg": "6.3.0",
+    "pg": "6.3.3",
     "pg-hstore": "^2.3.2",
     "pg-native": "^2.0.1",
     "pm2": "^2.5.0",
@@ -50,7 +48,9 @@
     "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.1",
     "flow-bin": "^0.51.0",
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "eslint-plugin-async-await": "^0.0.0",
+    "eslint-plugin-flowtype": "^2.35.0"
   },
   "scripts": {
     "start-client": "pm2 delete --silent web; pm2 start  react-scripts --name web -- start",

@@ -8,6 +8,10 @@ class Heightmap extends WorkerAbstract {
     super();
   }
 
+  async test() {
+    return await new Promise();
+  }
+
   process(job) {
     return new Promise(function(resolve, reject) {
       const config = job.input != "" ? JSON.parse(job.input) : {};
