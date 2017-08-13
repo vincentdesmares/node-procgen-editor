@@ -19,7 +19,7 @@ class Heightmap extends WorkerAbstract {
         octaves: 8,
         random: rng
       });
-      fs.open(`./heightmap-${job.id}.xyz`, "w", function(err, file) {
+      fs.open(`/tmp/heightmap-${job.id}.xyz`, "w", function(err, file) {
         for (let y = 0; y < 100; y++) {
           for (let x = 0; x < 100; x++) {
             let z = noiseGen.scaled2D(x, y);

@@ -9,12 +9,15 @@ export const runGenerationQuery = gql`
     runGeneration(sceneId: $sceneId) {
       id
       name
+      status
       metadata
       batches {
         id
         jobs {
           id
           type
+          name
+          status
         }
       }
     }

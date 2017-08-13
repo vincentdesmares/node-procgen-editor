@@ -10,7 +10,13 @@ class Step extends Component {
         {this.props.step.batchId &&
           <p className="ma1">Batch: {this.props.step.batchId}</p>}
         {this.props.step.slots &&
-          this.props.step.slots.map(slot => <Slot key={slot.id} slot={slot} />)}
+          this.props.step.slots.map(slot => {
+            //@todo Replace with reselect asap
+            const job = this.props.batch && this.props.batch.jobs
+              ? this.props.batch.jobs.find(job => slot.jobId == job.id)
+              : null;
+            return <Slot key={slot.id} slot={slot} job={job} />;
+          })}
       </div>
     );
   }

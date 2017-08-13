@@ -145,6 +145,19 @@ FROM (SELECT ST_ValueCount(rast) As pvc
     FROM terrain WHERE rid=1) As foo
     ORDER BY (pvc).value;
 ```
+## TODO list
+
+- [x] Make a basic execution pipeline for scenes
+- [ ] Make batches work (with status "stashed")
+- [ ] Add terrain in database
+- [ ] Add zones in database
+- [ ] Visualize zones in 3d
+- [ ] Add placement in database
+- [ ] Visualize placement in 3d
+- [ ] Add entities in database
+- [ ] Visualize entities in 3d
+- [ ] Delete old jobs when re-assigning them to a scene scenario.
+- [ ] plop
 
 ## Project References
 [Create React App](https://github.com/facebookincubator/create-react-app)

@@ -83,7 +83,7 @@ const typeDefs = `
     ): Project
   }
   type Subscription {
-    jobUpdated(type: String!): Job
+    jobUpdated(type: String): Job
   }
 `;
 
@@ -166,7 +166,16 @@ const resolvers = {
           return [];
         });
     },
-    scene: (_, { id }) => Scene.findById(id),
+    scene: (_, { id }) =>
+      Scene.findById(id, {
+        include: [
+          {
+            model: Batch,
+            as: "batches",
+            include: [{ model: Job, as: "jobs" }]
+          }
+        ]
+      }),
     batches: () => {
       console.log("batches called");
       return Batch.findAll({
@@ -270,12 +279,22 @@ const resolvers = {
               status: "pending",
               batchId: batch.id
             });
+            jobs.push(job.id);
             metadata.steps[i].slots[slotIndex].jobId = job.id;
           }
         }
       }
       scene.metadata = JSON.stringify(metadata);
-      return await scene.save();
+      await scene.save();
+      return await Scene.findById(sceneId, {
+        include: [
+          {
+            model: Batch,
+            as: "batches",
+            include: [{ model: Job, as: "jobs" }]
+          }
+        ]
+      });
     }
   },
   Subscription: {

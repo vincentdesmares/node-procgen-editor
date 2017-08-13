@@ -14,11 +14,24 @@ const getQuery = gql`
       name
       status
       metadata
+      batches {
+        id
+        jobs {
+          id
+          type
+          name
+          status
+        }
+      }
     }
   }
 `;
 
 class ScenePage extends Component {
+  componentWillMount() {
+    this.props.subscribeToJobUpdates();
+  }
+
   render() {
     const { scene: { scene, loading } } = this.props;
 
@@ -47,14 +60,32 @@ class ScenePage extends Component {
         <div className="cb" />
         <div className="mt3 ba b--black flex overflow-x-scroll">
           {steps &&
-            steps.map((step, index) => <SceneStep key={index} step={step} />)}
+            steps.map((step, index) => {
+              //@todo Replace with reselect asap
+              const batch = scene.batches
+                ? scene.batches.find(batch => step.batchId === batch.id)
+                : null;
+              console.log(scene.batches);
+              return <SceneStep key={index} step={step} batch={batch} />;
+            })}
           <div className="cb" />
         </div>
-        {scene.metadata}
       </div>
     );
   }
 }
+
+const subscriptionJobUpdated = gql`
+subscription onJobUpdated {
+  jobUpdated {
+    id
+    type
+    name
+    input
+    output
+    status
+  }
+}`;
 
 const getWithData = graphql(getQuery, {
   name: "scene",
@@ -62,7 +93,24 @@ const getWithData = graphql(getQuery, {
     variables: {
       id: match.params.sceneId
     }
-  })
+  }),
+  props: ({ scene, ownProps }) => {
+    const subscribeToJobUpdates = params =>
+      scene.subscribeToMore({
+        document: subscriptionJobUpdated,
+        updateQuery(prev, { subscriptionData }) {
+          const { job } = subscriptionData.data;
+          if (!scene.batches) {
+            return scene;
+          }
+          let batch = scene.batches.find(batch => batch.id = job.batchId);
+          let outdatedJob = batch.jobs.find(j => j.id = job.id);
+          outdatedJob = job;
+          return scene;
+        }
+      });
+    return { scene, subscribeToJobUpdates };
+  }
 })(ScenePage);
 
 export default getWithData;
