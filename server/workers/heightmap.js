@@ -1,3 +1,4 @@
+require("@std/esm");
 const WorkerAbstract = require("./abstract");
 const FastSimplexNoise = require("fast-simplex-noise").default;
 const seedrandom = require("seedrandom");
@@ -30,8 +31,9 @@ class Heightmap extends WorkerAbstract {
       });
     });
 
-    for (let y = 0; y < 100; y++) {
-      for (let x = 0; x < 100; x++) {
+    const width = 128;
+    for (let y = 0; y < width; y++) {
+      for (let x = 0; x < width; x++) {
         let z = noiseGen.scaled2D(x, y);
         fs.writeSync(file, `${x} ${y} ${z}\n`);
       }
@@ -39,9 +41,11 @@ class Heightmap extends WorkerAbstract {
 
     //CREATE EXTENSION IF NOT EXISTS postgis;
     await exec(
-      `raster2pgsql ${xyzFilePath} public.terrain -t 128x128 -l 4 -a -M -F -s 4236 > /tmp/import.sql`
+      `raster2pgsql ${xyzFilePath} public.terrain -t ${width}x${width} -l 4 -a -M -F -s 4236 > /tmp/import.sql`
     );
     await exec(`psql -U procgen procgen < /tmp/import.sql`);
+    // join rasters in generating the same terrain:
+    // SELECT ST_Union(rast) FROM terrain WHERE sceneId = 1 and slotId = 1
     console.log("Saved!");
     return job;
   }

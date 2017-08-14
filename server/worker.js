@@ -1,3 +1,4 @@
+require("@std/esm");
 const uuidv4 = require("uuid/v4");
 
 console.log("Uniq id for worker life:", uuidv4());
@@ -19,14 +20,15 @@ var argv = require("minimist")(process.argv.slice(2));
 console.dir(argv);
 
 let workerType = argv.t ? argv.t : "heightmap";
-console.log(`Starting a ${workerType} worker, will look for job every ${loopTime/1000}s`);
+console.log(
+  `Starting a ${workerType} worker, will look for job every ${loopTime / 1000}s`
+);
 
 let WorkerClass = null;
 try {
-  WorkerClass = require("./workers/" + workerType);
+  WorkerClass = require("./workers/" + workerType).default;
 } catch (error) {
   console.log("[error] Worker could not be loaded: ", error.message);
-  return;
 }
 const worker = new WorkerClass();
 // client

@@ -7,6 +7,7 @@
     "node": "^7"
   },
   "dependencies": {
+    "@std/esm": "^0.2.2",
     "aframe": "^0.6.1",
     "aframe-particle-system-component": "^1.0.10",
     "aframe-react": "^4.3.0",
@@ -47,10 +48,10 @@
     "babel-preset-flow": "^6.23.0",
     "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.1",
-    "flow-bin": "^0.51.0",
-    "react-scripts": "1.0.7",
     "eslint-plugin-async-await": "^0.0.0",
-    "eslint-plugin-flowtype": "^2.35.0"
+    "eslint-plugin-flowtype": "^2.35.0",
+    "flow-bin": "^0.51.0",
+    "react-scripts": "1.0.7"
   },
   "scripts": {
     "start-client": "pm2 delete --silent web; pm2 start  react-scripts --name web -- start",
