@@ -262,6 +262,10 @@ const resolvers = {
       let scene = await Scene.findById(sceneId); //.then(scene => {
       console.log("scene found", scene);
       let metadata = JSON.parse(scene.metadata);
+      metadata.generationId = metadata.generationId
+        ? metadata.generationId + 1
+        : 1;
+      metadata.seed = metadata.seed ? metadata.seed : "default";
       for (let i = 0; i < metadata.steps.length; i++) {
         const step = metadata.steps[i];
         let batch = await Batch.create({
@@ -277,7 +281,11 @@ const resolvers = {
               type: slot.type,
               name: `${slot.type} job`,
               status: "pending",
-              batchId: batch.id
+              batchId: batch.id,
+              input: JSON.stringify({
+                generationId: metadata.generationId,
+                seed: metadata.seed
+              })
             });
             jobs.push(job.id);
             metadata.steps[i].slots[slotIndex].jobId = job.id;
