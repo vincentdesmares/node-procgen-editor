@@ -1,4 +1,4 @@
-!#/bin/sh
+#!/bin/sh
 
 blender -P /vagrant/blender/test2.py --background
 

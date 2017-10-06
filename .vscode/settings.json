@@ -1,9 +1,11 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-    "editor.fontFamily": "monaco, 'Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
-    "editor.insertSpaces": true,
-    "editor.formatOnSave": true,
-    "editor.scrollBeyondLastLine": false,
-    "flow.useNPMPackagedFlow": true,
-    "javascript.validate.enable": false
+  // Place your settings in this file to overwrite default and user settings.
+  "editor.fontFamily":
+    "monaco, 'Droid Sans Mono', 'Courier New', monospace, 'Droid Sans Fallback'",
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.scrollBeyondLastLine": false,
+  "flow.useNPMPackagedFlow": true,
+  "javascript.validate.enable": false,
+  "python.linting.pylintEnabled": false
 }
